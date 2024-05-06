@@ -86,7 +86,7 @@ export const login: RequestHandler<
 
   req.session.userId = user._id;
 
-  res.status(200).json({ user });
+  res.status(200).json(user);
 };
 
 export const getAuthUser: RequestHandler = async (req, res) => {
