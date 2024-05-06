@@ -5,6 +5,7 @@ import userRoute from "./user/route";
 import diaryRoute from "./diary/routes";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import env from "./utils/validateEnv";
 import { requestAuth } from "./utils/auth";
 
 const app = express();
@@ -47,7 +48,7 @@ app.use(express.json());
 app.use(
   session({
     proxy: true,
-    secret: "wavez",
+    secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -58,13 +59,11 @@ app.use(
     },
     rolling: true,
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://wavezboy:Abdulfatah16@cluster0.7rxkrhf.mongodb.net/",
+      mongoUrl: env.MONGO_CONNECTION_STRING,
     }),
   })
 );
 
-app.set("trust proxy", 1);
 app.use("/user", userRoute);
 app.use("/diary", diaryRoute);
 
