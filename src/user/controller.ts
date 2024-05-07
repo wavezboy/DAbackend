@@ -46,7 +46,8 @@ export const register: RequestHandler<
     lastName: lastName,
     password: hashedPassword,
   });
-  res.status(200).json({ user });
+  req.session.userId = user._id;
+  res.status(200).json(user);
 };
 
 interface loginBody {
