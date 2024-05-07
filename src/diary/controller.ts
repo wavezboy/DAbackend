@@ -25,7 +25,7 @@ export const createEntry: RequestHandler<
     userId: authId,
   });
 
-  return res.status(200).json({ entry });
+  return res.status(200).json(entry);
 };
 
 export const getEntry: RequestHandler = async (req, res) => {
