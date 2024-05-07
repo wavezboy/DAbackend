@@ -9,6 +9,12 @@ import env from "./utils/validateEnv";
 import { requestAuth } from "./utils/auth";
 
 const app = express();
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Replace with your client's origin
@@ -37,6 +43,7 @@ app.use(express.json());
 //     }),
 //   })
 // );
+app.set("trust proxy", 1);
 
 app.use(
   session({
@@ -54,13 +61,6 @@ app.use(
     store: MongoStore.create({
       mongoUrl: env.MONGO_CONNECTION_STRING,
     }),
-  })
-);
-
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
   })
 );
 
