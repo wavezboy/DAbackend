@@ -35,9 +35,9 @@ export const getEntries: RequestHandler = async (req, res) => {
   const authId = req.session.userId;
   const entries = await entryModel.find({ userId: authId }).exec();
   if (!entries) {
-    res.status(500).json("no diary entry found");
+    return res.status(500).json("no diary entry found");
   }
-  res.status(200).json(entries);
+  return res.status(200).json(entries);
 };
 export const updateEntry: RequestHandler = async (req, res) => {};
 export const deleteEntry: RequestHandler = async (req, res) => {};

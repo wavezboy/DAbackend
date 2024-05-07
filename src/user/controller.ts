@@ -63,7 +63,7 @@ export const login: RequestHandler<
   const { email, password } = req.body;
 
   if (!(email || password)) {
-    res.status(500).json("email and password is required");
+    return res.status(500).json("email and password is required");
   }
 
   const user = await userModel
@@ -86,7 +86,7 @@ export const login: RequestHandler<
 
   req.session.userId = user._id;
 
-  res.status(200).json(user);
+  return res.status(200).json(user);
 };
 
 export const getAuthUser: RequestHandler = async (req, res) => {
@@ -95,7 +95,7 @@ export const getAuthUser: RequestHandler = async (req, res) => {
     .select("+email")
     .exec();
   if (!user) {
-    res.status(500).json("no user is login");
+    return res.status(500).json("no user is login");
   }
   res.status(200).json(user);
 };
@@ -105,7 +105,7 @@ export const logOutUser: RequestHandler = async (req, res, next) => {
     if (error) {
       next(error);
     } else {
-      res.sendStatus(200);
+      return res.sendStatus(201);
     }
   });
 };

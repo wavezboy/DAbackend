@@ -21,13 +21,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
-
 app.use(express.json());
 // app.use(
 //   session({
@@ -53,9 +46,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      // httpOnly: true,
+      // secure: false,
+      // sameSite: "none",
     },
     rolling: true,
     store: MongoStore.create({
@@ -64,8 +57,18 @@ app.use(
   })
 );
 
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
+
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/user", userRoute);
-app.use("/diary", diaryRoute);
+app.use("/diary", requestAuth, diaryRoute);
 
 app.get("/", async (req, res) => {
   res.status(200).json({ message: "new Diary app is up and running" });

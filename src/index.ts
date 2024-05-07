@@ -9,7 +9,7 @@ mongoose
   .then(() => {
     console.log("mongoose connected");
     app.listen(env.PORT, () => {
-      console.info(`running on ${ip.address()}:${env.PORT}`);
+      console.info(`running on ${env.PORT}`);
     });
   })
   .catch(console.error);
